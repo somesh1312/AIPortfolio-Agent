@@ -1,12 +1,14 @@
+import sys
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from backend.loader import load_markdown_docs
+from loader import load_markdown_docs
 from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 
 BASE = Path(__file__).resolve().parent.parent
+sys.path.append(str(BASE_DIR))
 STORAGE = BASE / "storage"
 STORAGE.mkdir(exist_ok=True)
 
