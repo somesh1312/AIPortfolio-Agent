@@ -2,18 +2,21 @@ import sys
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from loader import load_markdown_docs
 from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 
+# Ensure backend is in sys.path
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR / "backend"))
+
+from loader import load_markdown_docs
+
 STORAGE = BASE_DIR / "storage"
 STORAGE.mkdir(exist_ok=True)
 
 # Load environment variables
-load_dotenv(BASE / ".env")
+load_dotenv(BASE_DIR / ".env")
 
 api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
@@ -46,13 +49,11 @@ for doc in docs:
     if chunks:
         all_chunks.extend(chunks)
     else:
-        # Fallback if doc is very short
         all_chunks.append(doc)
 
 print(f"✅ Created {len(all_chunks)} chunks")
-vs = FAISS.from_documents(all_chunks, embeddings)
 
 print("⚡ Building FAISS index...")
-vs = FAISS.from_documents(chunks, embeddings)
-vs.save_local(str(STORAGE / 'faiss_index'))
+vs = FAISS.from_documents(all_chunks, embeddings)
+vs.save_local(str(STORAGE / "faiss_index"))
 print("✅ Index saved to storage/faiss_index")
