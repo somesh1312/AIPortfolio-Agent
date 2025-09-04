@@ -8,7 +8,7 @@ from langchain_community.vectorstores import FAISS
 
 # Base dir = project root (AIPortfolioAgent)
 BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.append(str(BASE_DIR / "backend"))  # 👈 add backend to sys.path
+sys.path.append(str(BASE_DIR))  # 👈 add backend to sys.path
 
 from backend.loader import load_markdown_docs  # ✅ now Python can find loader.py
 
