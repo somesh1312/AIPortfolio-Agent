@@ -6,11 +6,12 @@ from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 
-# Ensure backend is in sys.path
+# --- Fix sys.path so we can import backend modules ---
 BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.append(str(BASE_DIR / "backend"))
+BACKEND_DIR = BASE_DIR / "backend"
+sys.path.insert(0, str(BACKEND_DIR))  # force /app/backend to be in import path
 
-from loader import load_markdown_docs
+from loader import load_markdown_docs   # ✅ now works
 
 STORAGE = BASE_DIR / "storage"
 STORAGE.mkdir(exist_ok=True)
