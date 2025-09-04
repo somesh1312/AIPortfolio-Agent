@@ -6,17 +6,16 @@ from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 
-# --- Fix sys.path so we can import backend modules ---
+# Base dir = project root (AIPortfolioAgent)
 BASE_DIR = Path(__file__).resolve().parent.parent
-BACKEND_DIR = BASE_DIR / "backend"
-sys.path.insert(0, str(BACKEND_DIR))  # force /app/backend to be in import path
+sys.path.append(str(BASE_DIR / "backend"))  # 👈 add backend to sys.path
 
-from loader import load_markdown_docs   # ✅ now works
+from backend.loader import load_markdown_docs  # ✅ now Python can find loader.py
 
 STORAGE = BASE_DIR / "storage"
 STORAGE.mkdir(exist_ok=True)
 
-# Load environment variables
+# ✅ Load .env from project root
 load_dotenv(BASE_DIR / ".env")
 
 api_key = os.getenv("OPENAI_API_KEY")
@@ -50,6 +49,7 @@ for doc in docs:
     if chunks:
         all_chunks.extend(chunks)
     else:
+        # Fallback if doc is very short
         all_chunks.append(doc)
 
 print(f"✅ Created {len(all_chunks)} chunks")
