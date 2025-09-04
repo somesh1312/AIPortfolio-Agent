@@ -8,7 +8,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 
 BASE = Path(__file__).resolve().parent.parent
-sys.path.append(str(BASE_DIR))
+sys.path.append(str(BASE))
 STORAGE = BASE / "storage"
 STORAGE.mkdir(exist_ok=True)
 
