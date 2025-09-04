@@ -1,9 +1,13 @@
 {
-  "build": {
-    "builder": "Python",
-    "buildCommand": "pip install -r requirements.txt"
-  },
-  "deploy": {
-    "startCommand": "uvicorn main:API --host 0.0.0.0 --port $PORT"
-  }
+  "services": [
+    {
+      "name": "somesh-backend",
+      "rootDirectory": "backend",
+      "buildCommand": "pip install -r requirements.txt",
+      "startCommand": "uvicorn main:API --host 0.0.0.0 --port $PORT",
+      "envVars": {
+        "PYTHON_VERSION": "3.10"
+      }
+    }
+  ]
 }
