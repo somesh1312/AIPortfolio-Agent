@@ -7,9 +7,9 @@ from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 
-BASE = Path(__file__).resolve().parent.parent
-sys.path.append(str(BASE))
-STORAGE = BASE / "storage"
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(BASE_DIR / "backend"))
+STORAGE = BASE_DIR / "storage"
 STORAGE.mkdir(exist_ok=True)
 
 # Load environment variables
