@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from rag_utils import load_vectorstore, answer_question
+from backend.rag_utils import load_vectorstore, answer_question
 
 load_dotenv()
 API = FastAPI(title="Somesh Portfolio Agent API")

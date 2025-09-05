@@ -10,7 +10,7 @@ from langchain_community.vectorstores import FAISS
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))  # 👈 add backend to sys.path
 
-from loader import load_markdown_docs  # ✅ now Python can find loader.py
+from backend.loader import load_markdown_docs  # ✅ now Python can find loader.py
 
 STORAGE = BASE_DIR / "storage"
 STORAGE.mkdir(exist_ok=True)
