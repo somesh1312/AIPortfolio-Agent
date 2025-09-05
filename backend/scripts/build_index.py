@@ -58,3 +58,7 @@ print("⚡ Building FAISS index...")
 vs = FAISS.from_documents(all_chunks, embeddings)
 vs.save_local(str(STORAGE / "faiss_index"))
 print("✅ Index saved to storage/faiss_index")
+
+if __name__ == "__main__":
+    print("🚀 Building FAISS index inside container...")
+    # rest of your script already saves to storage/faiss_index
