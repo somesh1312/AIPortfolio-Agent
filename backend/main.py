@@ -9,6 +9,7 @@ from rag_utils import load_vectorstore, answer_question
 load_dotenv()
 API = FastAPI(title="Somesh Portfolio Agent API")
 
+# Allow frontend
 origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
 
 API.add_middleware(
@@ -22,10 +23,15 @@ API.add_middleware(
 # ✅ Serve resumes (PDFs in backend/resumes)
 API.mount("/resumes", StaticFiles(directory="resumes"), name="resumes")
 
+# Load FAISS vectorstore
 VECTORSTORE = load_vectorstore()
 
 class ChatRequest(BaseModel):
     message: str
+
+@API.get("/")
+def root():
+    return {"message": "AI Portfolio Agent is live 🚀"}
 
 @API.get("/api/health")
 def health():
@@ -33,14 +39,17 @@ def health():
 
 @API.post("/api/chat")
 def chat(req: ChatRequest):
+    # detect your domain dynamically (Railway injects it in request)
+    public_domain = os.getenv("PUBLIC_DOMAIN", "http://localhost:8000")
+
     resumes = [
         {
             "label": "Cloud Engineer",
-            "url": "http://localhost:8000/resumes/Somesh-Cloud-Engineer.pdf"
+            "url": f"{public_domain}/resumes/Somesh-Cloud-Engineer.pdf",
         },
         {
             "label": "Data/Analytics",
-            "url": "http://localhost:8000/resumes/somesh-data-analytics.pdf"
+            "url": f"{public_domain}/resumes/somesh-data-analytics.pdf",
         },
     ]
 
@@ -57,4 +66,6 @@ def chat(req: ChatRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(API, host="0.0.0.0", port=8000)
+    # ✅ Use Railway's PORT if available
+    port = int(os.getenv("PORT", 8080))
+    uvicorn.run(API, host="0.0.0.0", port=port)
