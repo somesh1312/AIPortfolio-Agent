@@ -1,7 +1,24 @@
+# Environment files
 .env
 **/.env
+
+# Node / Next.js junk
 node_modules
 .next
-__pycache__
+
+# Python junk
+__pycache__/
+*.pyc
+*.pyo
+
+# Local virtual environment
 backend/.venv
-backend/storage/faiss_index/
+
+# Ignore all storage except FAISS index
+backend/storage/*
+!backend/storage/faiss_index/
+!backend/storage/faiss_index/index.faiss
+!backend/storage/faiss_index/index.pkl
+
+# Ensure backend is a package
+!backend/__init__.py
